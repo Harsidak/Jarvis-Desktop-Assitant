@@ -5,6 +5,7 @@ import webbrowser
 import logging
 import pywhatkit
 import pyautogui
+from googlesearch import search as google_search
 
 class SkillsRegistry:
     def __init__(self):
@@ -14,7 +15,10 @@ class SkillsRegistry:
             "open": self.open_app,
             "search": self.search_web,
             "play": self.play_youtube,
-            "volume": self.control_volume
+            "volume": self.control_volume,
+            "write_file": self.write_file,
+            "read_file": self.read_file,
+            "google_search": self.get_search_results
         }
 
     def execute_skill(self, command):
@@ -126,4 +130,28 @@ class SkillsRegistry:
             return "Volume command not recognized"
         except Exception as e:
             logging.error(f"Volume Error: {e}")
-            return "I couldn't adjust the volume."
+    def write_file(self, filename, content):
+        try:
+            with open(filename, 'w') as f:
+                f.write(content)
+            return f"Successfully wrote to {filename}"
+        except Exception as e:
+            return f"Error writing file: {e}"
+
+    def read_file(self, filename):
+        try:
+            if not os.path.exists(filename):
+                return "File not found."
+            with open(filename, 'r') as f:
+                return f.read()
+        except Exception as e:
+            return f"Error reading file: {e}"
+
+    def get_search_results(self, query, num_results=3):
+        try:
+            results = []
+            for j in google_search(query, num=num_results, stop=num_results, pause=2):
+                results.append(j)
+            return f"Search Results for '{query}':\n" + "\n".join(results)
+        except Exception as e:
+            return f"Search Error: {e}"

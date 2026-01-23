@@ -1,60 +1,29 @@
-# Jarvis Desktop Assistant
+# Jarvis 2.0 - AI Agent
 
-A Python-based AI desktop assistant capable of voice interaction, system command execution, and intelligent conversational abilities using OpenAI or Gemini.
+A fully functional **AI Agent** capable of reasoning, tool usage, and persistent memory.
 
-## 🚀 Features
-- **Voice Interaction**: 
-  - **Speech-to-Text (STT)**: Listens to your commands using Google Speech Recognition.
-  - **Text-to-Speech (TTS)**: Responds back to you verbally.
-- **LLM Integration**: 
-  - Powered by **OpenAI (GPT-3.5)** or **Google Gemini** for intelligent, context-aware responses.
-- **System Control**: 
-  - Open applications (Notepad, Calculator, Browsers).
-  - Check Time and Date.
-  - Web Search.
+## 🧠 Capabilities
+- **Reasoning Engine**: Uses a ReAct (Reason+Act) loop to solve complex queries.
+- **Persistent Memory**: Remembers context across sessions (`brain/memory.json`).
+- **Real Web Search**: Can fetch and read search results to answer current events.
+- **File System**: Can read and write files on your computer.
+- **Media**: Plays YouTube videos and controls system volume.
+- **Voice**: Full STT and TTS support.
 
-## 🛠️ Installation & Setup
-
-### Prerequisites
-- Python 3.8+ (Python 3.12 recommended)
-- A microphone and speakers.
-
-### Steps
-1. **Clone/Download** the repository.
-2. **Install Dependencies**:
-   Open a terminal in the project folder and run:
+## 🛠️ Setup
+1. **Install**:
    ```bash
    pip install -r requirements.txt
    ```
-3. **Configuration**:
-   - The system creates a `.env` file in `config/.env` on first run (or you can create it manually).
-   - Add your API keys:
-     ```ini
-     LLM_PROVIDER=openai
-     OPENAI_API_KEY=sk-...
-     # Or for Gemini:
-     # LLM_PROVIDER=gemini
-     # GEMINI_API_KEY=AIza...
-     ```
+2. **Configure**:
+   - Ensure `.env` has your `GEMINI_API_KEY` (or OpenAI).
+   - `GEMINI_MODEL=gemini-1.5-flash` is the default.
+3. **Run**:
+   ```bash
+   .\run_jarvis.bat
+   ```
 
-## 💻 Usage
-
-**Running the Assistant:**
-Simply double-click **`run_jarvis.bat`** or run:
-```bash
-python main.py
-```
-
-**Voice Commands:**
-- *"What time is it?"*
-- *"Open Notepad"*
-- *"Search Google for Python tutorials"*
-- *"Tell me a joke"* (Handled by LLM)
-
-## 🔧 Troubleshooting
-- **Microphone Issues**: Ensure your microphone is the default recording device in Windows Sound settings.
-- **API Errors**: If `OPENAI_API_KEY` is missing, LLM features will not work. Check your `.env` file.
-- **Audio Dependencies**: If you see `PyAudio` errors, try installing it via `pip install pipwin && pipwin install pyaudio` or ensure C++ build tools are installed.
-
-## 🤝 Contributing
-Feel free to add new skills in `core/skills.py`!
+## 🤖 Interaction Examples
+- *"Research the history of generic AIs and save the summary to history.txt"*
+- *"Play lofi hip hop on YouTube"*
+- *"What is on my schedule today?"* (If you add a calendar skill!)
