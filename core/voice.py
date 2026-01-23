@@ -7,11 +7,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 class VoiceEngine:
     def __init__(self):
-        # Initialize TTS
-        self.engine = pyttsx3.init()
-        self.engine.setProperty('rate', VOICE_RATE)
-        self.engine.setProperty('volume', VOICE_VOLUME)
-        
+        # We will initialize the engine on demand to avoid 'loop already running' errors
         # Initialize STT
         self.recognizer = sr.Recognizer()
         self.microphone = sr.Microphone()
@@ -23,9 +19,17 @@ class VoiceEngine:
 
     def speak(self, text):
         """Convert text to speech."""
-        logging.info(f"Speaking: {text}")
-        self.engine.say(text)
-        self.engine.runAndWait()
+        try:
+            logging.info(f"Speaking: {text}")
+            # Re-initialize engine every time to prevent event loop blocking issues
+            engine = pyttsx3.init()
+            engine.setProperty('rate', VOICE_RATE)
+            engine.setProperty('volume', VOICE_VOLUME)
+            engine.say(text)
+            engine.runAndWait()
+            # engine.stop() # Ensure it stops
+        except Exception as e:
+            logging.error(f"TTS Error: {e}")
 
     def listen(self):
         """Listen for audio input and convert to text."""

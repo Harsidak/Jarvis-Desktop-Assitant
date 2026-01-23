@@ -1,5 +1,6 @@
 import time
 import logging
+import winsound
 from core.voice import VoiceEngine
 from core.llm import LLMClient
 from core.skills import SkillsRegistry
@@ -19,13 +20,18 @@ def main():
         try:
             # 1. Listen for audio
             # For simplicity in this v1, we listen continuously or wait for wake word
-            # logic can be improved. Here we just take any input.
+            
+            # Simple interaction loop:
+            # User speaks -> Jarvis processes
+            
+            # winsound.Beep(600, 200) # Optional ding before listening
             user_input = voice.listen()
             
             if not user_input:
                 continue
 
             logging.info(f"User said: {user_input}")
+            winsound.Beep(800, 200) # Ding to acknowledge input received
 
             # Basic Wake Word check (optional if we want to process everything)
             if WAKE_WORD and WAKE_WORD not in user_input:
